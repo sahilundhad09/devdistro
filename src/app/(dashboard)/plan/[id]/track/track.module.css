@@ -1,0 +1,262 @@
+/* Action Tracker Page Styles */
+.tracker {}
+
+.tracker__header {
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.tracker__title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-2);
+}
+
+.tracker__subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+}
+
+/* Progress */
+.tracker__progress {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+}
+
+.tracker__progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.tracker__progressLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.tracker__progressCount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.tracker__progressBar {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-tertiary);
+  overflow: hidden;
+}
+
+.tracker__progressFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-gradient);
+  transition: width var(--transition-slow);
+}
+
+/* Filters */
+.tracker__filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filterBtn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.filterBtn--active {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-accent-primary);
+  color: var(--color-text-accent);
+}
+
+.addChannelBtn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px dashed var(--color-border);
+  background: transparent;
+  color: var(--color-text-accent);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--transition-fast);
+}
+
+.addChannelBtn:hover {
+  border-color: var(--color-accent-primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* Checklist items */
+.checklistGroup {
+  margin-bottom: var(--space-6);
+}
+
+.checklistGroup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.checklistGroup__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checklistGroup__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.checklistGroup__addBtn,
+.checklistGroup__deleteBtn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--transition-fast);
+}
+
+.checklistGroup__addBtn:hover {
+  color: var(--color-text-accent);
+  border-color: var(--color-accent-primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.checklistGroup__deleteBtn:hover {
+  color: var(--color-error);
+  border-color: rgba(239, 68, 68, 0.2);
+  background: var(--color-error-bg);
+}
+
+.checkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  margin-bottom: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.checkItem:hover {
+  border-color: var(--color-border-hover);
+}
+
+.checkItem--done {
+  opacity: 0.6;
+}
+
+.checkItem--done .checkItem__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.checkItem__checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border-hover);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all var(--transition-fast);
+  color: transparent;
+}
+
+.checkItem__checkbox:hover {
+  border-color: var(--color-accent-primary);
+}
+
+.checkItem__checkbox--checked {
+  background: var(--color-accent-gradient);
+  border-color: transparent;
+  color: white;
+}
+
+.checkItem__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkItem__title {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.checkItem__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.checkItem__actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.checkItem__actionBtn {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.checkItem__actionBtn:hover {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--color-text-primary);
+}

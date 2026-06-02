@@ -1,0 +1,60 @@
+// ================================================================
+// Curated Seed Data — Real directories, subreddits, newsletters
+// ================================================================
+
+export const SEED_DATA = {
+  subreddits: [
+    { name: 'r/SideProject', members: '180K', url: 'https://reddit.com/r/SideProject', tags: ['startup', 'indie', 'project', 'launch'] },
+    { name: 'r/startups', members: '1.2M', url: 'https://reddit.com/r/startups', tags: ['startup', 'business', 'saas', 'launch'] },
+    { name: 'r/Entrepreneur', members: '3.5M', url: 'https://reddit.com/r/Entrepreneur', tags: ['business', 'startup', 'entrepreneur'] },
+    { name: 'r/indiehackers', members: '35K', url: 'https://reddit.com/r/indiehackers', tags: ['indie', 'saas', 'developer', 'build'] },
+    { name: 'r/SaaS', members: '75K', url: 'https://reddit.com/r/SaaS', tags: ['saas', 'startup', 'software'] },
+    { name: 'r/webdev', members: '2.5M', url: 'https://reddit.com/r/webdev', tags: ['developer', 'web', 'tech', 'programming'] },
+    { name: 'r/programming', members: '6M', url: 'https://reddit.com/r/programming', tags: ['developer', 'programming', 'tech'] },
+    { name: 'r/InternetIsBeautiful', members: '17M', url: 'https://reddit.com/r/InternetIsBeautiful', tags: ['launch', 'product', 'web', 'tool'] },
+    { name: 'r/smallbusiness', members: '2M', url: 'https://reddit.com/r/smallbusiness', tags: ['business', 'small business', 'entrepreneur'] },
+    { name: 'r/freelance', members: '350K', url: 'https://reddit.com/r/freelance', tags: ['freelance', 'freelancer', 'service'] },
+    { name: 'r/digital_marketing', members: '250K', url: 'https://reddit.com/r/digital_marketing', tags: ['marketing', 'growth', 'distribution'] },
+    { name: 'r/growthacking', members: '120K', url: 'https://reddit.com/r/growthacking', tags: ['growth', 'marketing', 'startup'] },
+    { name: 'r/nocode', members: '90K', url: 'https://reddit.com/r/nocode', tags: ['nocode', 'tool', 'builder', 'tech'] },
+    { name: 'r/artificial', members: '500K', url: 'https://reddit.com/r/artificial', tags: ['ai', 'ml', 'artificial intelligence'] },
+    { name: 'r/MachineLearning', members: '3M', url: 'https://reddit.com/r/MachineLearning', tags: ['ai', 'ml', 'deep learning'] },
+    { name: 'r/reactjs', members: '400K', url: 'https://reddit.com/r/reactjs', tags: ['react', 'frontend', 'javascript', 'developer'] },
+    { name: 'r/nextjs', members: '150K', url: 'https://reddit.com/r/nextjs', tags: ['nextjs', 'react', 'fullstack', 'developer'] },
+    { name: 'r/golang', members: '250K', url: 'https://reddit.com/r/golang', tags: ['go', 'backend', 'developer'] },
+    { name: 'r/design_critiques', members: '90K', url: 'https://reddit.com/r/design_critiques', tags: ['design', 'ui', 'ux', 'feedback'] },
+    { name: 'r/alphaandbetausers', members: '45K', url: 'https://reddit.com/r/alphaandbetausers', tags: ['launch', 'beta', 'testing', 'feedback'] },
+  ],
+
+  directories: [
+    { name: 'Product Hunt', url: 'https://www.producthunt.com/posts/new', tags: ['product', 'launch', 'startup', 'general'] },
+    { name: 'Indie Hackers', url: 'https://www.indiehackers.com/products', tags: ['indie', 'startup', 'saas', 'general'] },
+    { name: 'BetaList', url: 'https://betalist.com/submit', tags: ['beta', 'startup', 'launch', 'general'] },
+    { name: 'Launching Next', url: 'https://www.launchingnext.com/submit/', tags: ['startup', 'launch', 'general'] },
+    { name: 'SaaSHub', url: 'https://www.saashub.com/submit', tags: ['saas', 'software', 'general'] },
+    { name: 'AlternativeTo', url: 'https://alternativeto.net/add-app/', tags: ['alternative', 'software', 'general'] },
+    { name: 'There\'s An AI For That', url: 'https://theresanaiforthat.com/submit/', tags: ['ai', 'tool', 'general'] },
+    { name: 'ToolPilot', url: 'https://www.toolpilot.ai/submit', tags: ['ai', 'tool', 'general'] },
+    { name: 'Uneed', url: 'https://www.uneed.best/submit-a-tool', tags: ['tool', 'startup', 'general'] },
+    { name: 'MicroLaunch', url: 'https://microlaunch.net/submit', tags: ['indie', 'startup', 'launch', 'general'] },
+    { name: 'Hacker News (Show HN)', url: 'https://news.ycombinator.com/submit', tags: ['tech', 'startup', 'developer', 'general'] },
+    { name: 'GetApp', url: 'https://www.getapp.com/', tags: ['saas', 'software', 'b2b', 'general'] },
+    { name: 'G2', url: 'https://www.g2.com/products/new', tags: ['saas', 'software', 'b2b', 'general'] },
+    { name: 'Capterra', url: 'https://www.capterra.com/', tags: ['saas', 'software', 'b2b', 'general'] },
+    { name: 'StackShare', url: 'https://stackshare.io/', tags: ['developer', 'tool', 'tech', 'general'] },
+    { name: 'Devpost', url: 'https://devpost.com/', tags: ['developer', 'project', 'tech'] },
+  ],
+
+  newsletters: [
+    { name: 'TLDR', subscribers: '1.2M', url: 'https://tldr.tech/newsletter/advertise', tags: ['tech', 'developer', 'startup', 'general'] },
+    { name: 'Hacker Newsletter', subscribers: '60K', url: 'https://hackernewsletter.com/', tags: ['tech', 'startup', 'developer'] },
+    { name: 'Indie Hackers Newsletter', subscribers: '100K', url: 'https://www.indiehackers.com/', tags: ['indie', 'startup', 'saas'] },
+    { name: 'Ben\'s Bites', subscribers: '500K', url: 'https://bensbites.beehiiv.com/', tags: ['ai', 'tech', 'startup'] },
+    { name: 'Product Hunt Daily', subscribers: '500K', url: 'https://www.producthunt.com/', tags: ['product', 'startup', 'launch'] },
+    { name: 'Starter Story', subscribers: '80K', url: 'https://www.starterstory.com/', tags: ['startup', 'business', 'entrepreneur'] },
+    { name: 'Console.dev', subscribers: '30K', url: 'https://console.dev/', tags: ['developer', 'tool', 'tech'] },
+    { name: 'Bytes.dev', subscribers: '200K', url: 'https://bytes.dev/', tags: ['javascript', 'developer', 'frontend'] },
+    { name: 'Dense Discovery', subscribers: '35K', url: 'https://www.densediscovery.com/', tags: ['design', 'tech', 'productivity'] },
+    { name: 'Changelog', subscribers: '25K', url: 'https://changelog.com/news', tags: ['developer', 'open source', 'tech'] },
+  ],
+};
