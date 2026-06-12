@@ -47,10 +47,41 @@ export default function SettingsPage() {
     router.refresh();
   };
 
+  const [simulating, setSimulating] = useState(false);
+
   const handleUpgrade = () => {
     if (!user) return;
     const checkoutUrl = getCheckoutUrl(user.id, user.email);
     window.open(checkoutUrl, '_blank');
+  };
+
+  const handleSimulateWebhook = async (action: 'upgrade' | 'cancel') => {
+    if (!user) return;
+    setSimulating(true);
+    try {
+      const res = await fetch('/api/dev/simulate-upgrade', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          email: user.email,
+          action,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert(`Simulation successful: ${action === 'upgrade' ? 'Upgraded to Pro' : 'Cancelled subscription'}. Refreshing...`);
+        window.location.reload();
+      } else {
+        alert(`Simulation failed: ${data.error}`);
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      alert(`Error during simulation: ${message}`);
+    } finally {
+      setSimulating(false);
+    }
   };
 
   if (loading) {
@@ -146,6 +177,45 @@ export default function SettingsPage() {
             )}
           </CardBody>
         </Card>
+
+        {/* Developer Webhook Simulator (only in development) */}
+        {process.env.NODE_ENV === 'development' && (
+          <Card>
+            <CardHeader>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                <span style={{ fontWeight: 600 }}>🛠️ Developer Webhook Simulator</span>
+              </div>
+            </CardHeader>
+            <CardBody>
+              <p style={{
+                color: 'var(--color-text-secondary)',
+                fontSize: 'var(--font-size-sm)',
+                marginBottom: 'var(--space-4)',
+                lineHeight: 'var(--line-height-relaxed)',
+              }}>
+                Test the Lemon Squeezy integration locally without setting up tunnels. This sends a signed webhook payload to your local webhook endpoint.
+              </p>
+              <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
+                <Button
+                  variant={tier === 'pro' ? 'ghost' : 'primary'}
+                  onClick={() => handleSimulateWebhook('upgrade')}
+                  loading={simulating}
+                >
+                  Simulate Pro Upgrade
+                </Button>
+                {tier === 'pro' && (
+                  <Button
+                    variant="danger"
+                    onClick={() => handleSimulateWebhook('cancel')}
+                    loading={simulating}
+                  >
+                    Simulate Cancellation
+                  </Button>
+                )}
+              </div>
+            </CardBody>
+          </Card>
+        )}
       </div>
     </div>
   );

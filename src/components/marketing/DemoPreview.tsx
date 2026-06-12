@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Copy, Check, Zap, Globe, MessageSquare, Newspaper, Share2, Compass, AlertCircle } from 'lucide-react';
-import { Card, CardBody, Badge } from '@/components/ui';
+import { Badge } from '@/components/ui';
 import styles from './DemoPreview.module.css';
 
 interface MockItem {

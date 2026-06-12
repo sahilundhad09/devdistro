@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Zap, Globe, Briefcase, Rocket, Loader2, Link2, Eye, EyeOff, Edit3 } from 'lucide-react';
 import { Button, Input, Textarea, Card, CardBody } from '@/components/ui';
 import type { ProjectMode } from '@/types';
@@ -18,6 +19,7 @@ export default function NewPlanPage() {
   const [urlLoading, setUrlLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState('');
+  const [isPaymentRequired, setIsPaymentRequired] = useState(false);
   const [scrapedContent, setScrapedContent] = useState('');
   const [showScrapedContent, setShowScrapedContent] = useState(false);
   const [editingScraped, setEditingScraped] = useState(false);
@@ -56,6 +58,7 @@ export default function NewPlanPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsPaymentRequired(false);
     setGenerating(true);
 
     try {
@@ -75,6 +78,9 @@ export default function NewPlanPage() {
       if (!res.ok) {
         const data = await res.json();
         setError(data.error || 'Failed to generate plan. Please try again.');
+        if (res.status === 402) {
+          setIsPaymentRequired(true);
+        }
         setGenerating(false);
         return;
       }
@@ -123,8 +129,18 @@ export default function NewPlanPage() {
                   borderRadius: 'var(--radius-md)',
                   color: 'var(--color-error)',
                   fontSize: 'var(--font-size-sm)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--space-2)',
                 }}>
-                  {error}
+                  <span>{error}</span>
+                  {isPaymentRequired && (
+                    <Link href="/settings">
+                      <Button variant="accent" size="sm" style={{ width: 'fit-content' }}>
+                        Upgrade to Pro
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               )}
 

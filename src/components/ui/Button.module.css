@@ -1,5 +1,5 @@
 /* ================================================================
-   Button Component Styles
+   Button Component Styles — Gumroad-inspired
    ================================================================ */
 
 .btn {
@@ -8,28 +8,33 @@
   justify-content: center;
   gap: var(--space-2);
   font-family: var(--font-family);
-  font-weight: 500;
-  border: 1px solid transparent;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition:
-    background var(--transition-fast),
-    border-color var(--transition-fast),
+    transform var(--transition-fast),
     box-shadow var(--transition-fast),
-    transform var(--transition-fast);
+    background var(--transition-fast);
   white-space: nowrap;
   user-select: none;
   text-decoration: none;
   position: relative;
   overflow: hidden;
+  letter-spacing: -0.01em;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
 }
 
 .btn:active:not(:disabled) {
-  transform: scale(0.97);
+  transform: translate(0px, 0px);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -37,72 +42,88 @@
 .btn--sm {
   font-size: var(--font-size-sm);
   padding: var(--space-2) var(--space-3);
-  height: 32px;
+  height: 34px;
+  border-radius: var(--radius-sm);
 }
 
 .btn--md {
   font-size: var(--font-size-base);
   padding: var(--space-2) var(--space-5);
-  height: 40px;
+  height: 42px;
 }
 
 .btn--lg {
   font-size: var(--font-size-lg);
   padding: var(--space-3) var(--space-8);
-  height: 48px;
+  height: 52px;
 }
 
 /* ── Variants ── */
 .btn--primary {
-  background: var(--color-accent-gradient);
-  color: white;
-  border-color: transparent;
-  box-shadow: var(--shadow-sm), 0 0 12px rgba(59, 130, 246, 0.2);
+  background: #ff90e8;
+  color: #1a1a1a;
+  border-color: #1a1a1a;
+  box-shadow: var(--shadow-md);
 }
 .btn--primary:hover:not(:disabled) {
-  background: var(--color-accent-gradient-hover);
-  box-shadow: var(--shadow-md), 0 0 20px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-lg);
+}
+.btn--primary:active:not(:disabled) {
+  box-shadow: none;
 }
 
 .btn--secondary {
-  background: var(--color-bg-card);
+  background: var(--color-bg-primary);
   color: var(--color-text-primary);
   border-color: var(--color-border);
-  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm);
 }
 .btn--secondary:hover:not(:disabled) {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-border-hover);
+  background: var(--color-bg-tertiary);
+  box-shadow: var(--shadow-md);
+}
+.btn--secondary:active:not(:disabled) {
+  box-shadow: none;
 }
 
 .btn--ghost {
   background: transparent;
   color: var(--color-text-secondary);
   border-color: transparent;
+  box-shadow: none;
 }
 .btn--ghost:hover:not(:disabled) {
-  background: rgba(148, 163, 184, 0.08);
+  background: var(--color-bg-tertiary);
   color: var(--color-text-primary);
+  border-color: var(--color-border-light);
 }
 
 .btn--danger {
   background: var(--color-error);
   color: white;
-  border-color: transparent;
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 .btn--danger:hover:not(:disabled) {
-  background: #dc2626;
-  box-shadow: var(--shadow-md), 0 0 12px rgba(239, 68, 68, 0.3);
+  background: #b91c1c;
+  box-shadow: var(--shadow-lg);
+}
+.btn--danger:active:not(:disabled) {
+  box-shadow: none;
 }
 
 .btn--accent {
   background: transparent;
-  color: var(--color-accent-primary);
-  border-color: var(--color-border-accent);
+  color: var(--color-text-accent);
+  border-color: #ff90e8;
+  box-shadow: var(--shadow-pink);
 }
 .btn--accent:hover:not(:disabled) {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: var(--color-accent-primary);
+  background: rgba(255, 144, 232, 0.08);
+  box-shadow: var(--shadow-glow-strong);
+}
+.btn--accent:active:not(:disabled) {
+  box-shadow: none;
 }
 
 /* ── Full Width ── */
@@ -120,20 +141,30 @@
   position: absolute;
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
+  border: 2.5px solid rgba(26, 26, 26, 0.25);
+  border-top-color: #1a1a1a;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
+}
+
+.btn--primary .btn__spinner {
+  border-color: rgba(26, 26, 26, 0.25);
+  border-top-color: #1a1a1a;
+}
+
+.btn--danger .btn__spinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: white;
 }
 
 /* ── Icon Button ── */
 .btn--icon {
   padding: var(--space-2);
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 }
 .btn--icon.btn--sm {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   padding: var(--space-1);
 }

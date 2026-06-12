@@ -1,5 +1,5 @@
 /* ================================================================
-   Badge Component Styles
+   Badge Component Styles — Gumroad-inspired
    ================================================================ */
 
 .badge {
@@ -8,50 +8,51 @@
   gap: var(--space-1);
   font-family: var(--font-family);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: 700;
   padding: 3px 10px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
-  letter-spacing: 0.02em;
-  border: 1px solid transparent;
+  letter-spacing: 0.03em;
+  border: 1.5px solid;
+  text-transform: uppercase;
   transition: all var(--transition-fast);
 }
 
 /* ── Variants ── */
 .badge--default {
   background: var(--color-bg-tertiary);
-  color: var(--color-text-secondary);
-  border-color: var(--color-border);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-medium);
 }
 
 .badge--success {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border-color: rgba(34, 197, 94, 0.2);
+  border-color: var(--color-success);
 }
 
 .badge--warning {
   background: var(--color-warning-bg);
   color: var(--color-warning);
-  border-color: rgba(245, 158, 11, 0.2);
+  border-color: var(--color-warning);
 }
 
 .badge--error {
   background: var(--color-error-bg);
   color: var(--color-error);
-  border-color: rgba(239, 68, 68, 0.2);
+  border-color: var(--color-error);
 }
 
 .badge--info {
   background: var(--color-info-bg);
   color: var(--color-info);
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--color-info);
 }
 
 .badge--accent {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
-  color: var(--color-text-accent);
-  border-color: var(--color-border-accent);
+  background: #ff90e8;
+  color: #1a1a1a;
+  border-color: #1a1a1a;
 }
 
 /* ── Dot indicator ── */
@@ -66,5 +67,5 @@
 .badge--warning .badge__dot { background: var(--color-warning); }
 .badge--error .badge__dot { background: var(--color-error); }
 .badge--info .badge__dot { background: var(--color-info); }
-.badge--accent .badge__dot { background: var(--color-accent-primary); }
+.badge--accent .badge__dot { background: var(--color-text-accent); }
 .badge--default .badge__dot { background: var(--color-text-muted); }

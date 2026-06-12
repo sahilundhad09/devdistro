@@ -1,4 +1,4 @@
-/* Dashboard Page Styles */
+/* Dashboard Page Styles — Gumroad-inspired */
 .dashboard {}
 
 .dashboard__header {
@@ -14,19 +14,21 @@
 
 .dashboard__title {
   font-size: var(--font-size-3xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   margin-bottom: var(--space-2);
+  color: #1a1a1a;
 }
 
 .dashboard__subtitle {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);
+  font-weight: 400;
 }
 
 .dashboard__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-5);
 }
 
@@ -45,9 +47,10 @@
 
 .projectCard__title {
   font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--color-text-primary);
   margin-bottom: var(--space-1);
+  letter-spacing: -0.02em;
 }
 
 .projectCard__mode {
@@ -71,6 +74,7 @@
   gap: var(--space-5);
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 .projectCard__stat {
@@ -82,16 +86,17 @@
 /* Progress bar */
 .progressBar {
   width: 60px;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background: var(--color-bg-tertiary);
+  height: 5px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border-light);
+  border: 1.5px solid var(--color-border-medium);
   overflow: hidden;
 }
 
 .progressBar__fill {
   height: 100%;
-  border-radius: var(--radius-full);
-  background: var(--color-accent-gradient);
+  border-radius: 0;
+  background: #ff90e8;
   transition: width var(--transition-slow);
 }
 
@@ -99,26 +104,29 @@
 .emptyState {
   text-align: center;
   padding: var(--space-16) var(--space-4);
-  animation: fadeInUp 500ms ease-out;
+  animation: fadeInUp 450ms ease-out;
 }
 
 .emptyState__icon {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: #ff90e8;
+  border: 2px solid #1a1a1a;
+  box-shadow: 4px 4px 0px #1a1a1a;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-6);
-  color: var(--color-accent-primary);
+  color: #1a1a1a;
 }
 
 .emptyState__title {
   font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-weight: 800;
   margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
 }
 
 .emptyState__desc {

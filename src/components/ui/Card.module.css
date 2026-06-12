@@ -1,46 +1,46 @@
 /* ================================================================
-   Card Component Styles
+   Card Component Styles — Gumroad-inspired
    ================================================================ */
 
 .card {
   background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   transition:
-    background var(--transition-base),
-    border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    transform var(--transition-base);
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.card--interactive {
+  cursor: pointer;
 }
 
 .card--interactive:hover {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-border-hover);
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px);
 }
 
 .card--interactive:active {
-  transform: translateY(0);
+  transform: translate(0, 0);
+  box-shadow: none;
 }
 
 .card--glow {
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-pink);
 }
 .card--glow:hover {
   box-shadow: var(--shadow-glow-strong);
+  transform: translate(-2px, -2px);
 }
 
 .card--bordered {
-  border-color: var(--color-border-accent);
+  border-color: #ff90e8;
 }
 
 /* ── Card Sections ── */
 .card__header {
   padding: var(--space-5) var(--space-6);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,7 @@
 
 .card__footer {
   padding: var(--space-4) var(--space-6);
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: flex-end;
