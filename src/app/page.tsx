@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import {
   Zap, Target, MessageSquare, CheckCircle2, Globe, Clock,
@@ -9,218 +7,10 @@ import { Button, Card, CardBody, Badge } from '@/components/ui';
 import DemoPreview from '@/components/marketing/DemoPreview';
 import styles from './(marketing)/landing.module.css';
 
+
 export default function LandingPage() {
   return (
     <div className={styles.landing}>
-
-      {/* ═══════════════════════════════════════════════════════════
-          VELORAH HERO SECTION — Fullscreen cinematic video hero
-          ═══════════════════════════════════════════════════════════ */}
-      <section
-        className={styles.velorah}
-        style={{
-          position: 'relative',
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          background: 'hsl(201 100% 13%)',
-          fontFamily: 'var(--font-body)',
-        }}
-      >
-        {/* ── Video Background ── */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
-          }}
-        >
-          <source
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
-            type="video/mp4"
-          />
-        </video>
-
-        {/* ── Glassmorphic Navigation ── */}
-        <nav
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '1.5rem 2rem',
-            maxWidth: '80rem',
-            margin: '0 auto',
-            width: '100%',
-          }}
-        >
-          {/* Logo */}
-          <span
-            style={{
-              fontSize: '1.875rem',
-              letterSpacing: '-0.025em',
-              color: 'hsl(0 0% 100%)',
-              fontFamily: "'Instrument Serif', serif",
-              fontWeight: 400,
-              lineHeight: 1,
-            }}
-          >
-            Velorah<sup style={{ fontSize: '0.75rem', verticalAlign: 'super' }}>®</sup>
-          </span>
-
-          {/* Nav links — hidden on mobile */}
-          <div
-            style={{
-              display: 'none',
-              alignItems: 'center',
-              gap: '2rem',
-            }}
-            className={styles.velorah__navLinks}
-          >
-            {[
-              { label: 'Home', active: true },
-              { label: 'Studio', active: false },
-              { label: 'About', active: false },
-              { label: 'Journal', active: false },
-              { label: 'Reach Us', active: false },
-            ].map((link) => (
-              <a
-                key={link.label}
-                href="#"
-                style={{
-                  fontSize: '0.875rem',
-                  color: link.active ? 'hsl(0 0% 100%)' : 'hsl(240 4% 66%)',
-                  textDecoration: 'none',
-                  transition: 'color 200ms',
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = 'hsl(0 0% 100%)';
-                }}
-                onMouseLeave={(e) => {
-                  if (!link.active) {
-                    (e.currentTarget as HTMLAnchorElement).style.color = 'hsl(240 4% 66%)';
-                  }
-                }}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <button
-            className="liquid-glass"
-            style={{
-              borderRadius: '9999px',
-              padding: '0.625rem 1.5rem',
-              fontSize: '0.875rem',
-              color: 'hsl(0 0% 100%)',
-              background: 'rgba(255,255,255,0.01)',
-              cursor: 'pointer',
-              transition: 'transform 200ms',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.03)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
-            }}
-          >
-            Begin Journey
-          </button>
-        </nav>
-
-        {/* ── Hero Content ── */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            flex: 1,
-            padding: '90px 1.5rem 10rem',
-          }}
-        >
-          {/* H1 */}
-          <h1
-            className="animate-fade-rise"
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: 'clamp(3rem, 9vw, 6rem)',
-              lineHeight: 0.95,
-              letterSpacing: '-2.46px',
-              maxWidth: '80rem',
-              fontWeight: 400,
-              color: 'hsl(0 0% 100%)',
-              margin: 0,
-            }}
-          >
-            Where{' '}
-            <em className="not-italic" style={{ color: 'hsl(240 4% 66%)', fontStyle: 'normal' }}>
-              dreams
-            </em>{' '}
-            rise{' '}
-            <em className="not-italic" style={{ color: 'hsl(240 4% 66%)', fontStyle: 'normal' }}>
-              through the silence.
-            </em>
-          </h1>
-
-          {/* Subtext */}
-          <p
-            className="animate-fade-rise-delay"
-            style={{
-              color: 'hsl(240 4% 66%)',
-              fontSize: 'clamp(1rem, 2vw, 1.125rem)',
-              maxWidth: '42rem',
-              marginTop: '2rem',
-              lineHeight: 1.7,
-            }}
-          >
-            We&apos;re designing tools for deep thinkers, bold creators, and quiet rebels. Amid
-            the chaos, we build digital spaces for sharp focus and inspired work.
-          </p>
-
-          {/* CTA Button */}
-          <button
-            className="liquid-glass animate-fade-rise-delay-2"
-            style={{
-              borderRadius: '9999px',
-              padding: '1.25rem 3.5rem',
-              fontSize: '1rem',
-              color: 'hsl(0 0% 100%)',
-              background: 'rgba(255,255,255,0.01)',
-              cursor: 'pointer',
-              marginTop: '3rem',
-              transition: 'transform 200ms',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.03)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
-            }}
-          >
-            Begin Journey
-          </button>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-          REST OF DEVDISTRO LANDING PAGE
-          ═══════════════════════════════════════════════════════════ */}
-
       {/* Navigation */}
       <nav className={styles.nav}>
         <div className={styles.nav__inner}>
@@ -241,7 +31,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero (DevDistro original) */}
+      {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.hero__glow} />
         <div className={styles.hero__badge}>
@@ -288,7 +78,7 @@ export default function LandingPage() {
             {
               icon: <MessageSquare size={24} />,
               title: 'Ready-to-Use Templates',
-              desc: "Copy-paste message templates tailored to each community's tone and rules. No more staring at a blank screen.",
+              desc: 'Copy-paste message templates tailored to each community\'s tone and rules. No more staring at a blank screen.',
             },
             {
               icon: <Globe size={24} />,

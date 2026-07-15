@@ -77,13 +77,17 @@ create table public.plan_items (
 create table public.subscriptions (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid not null references public.users(id) on delete cascade,
-  lemon_customer_id text,
-  lemon_subscription_id text unique,
+  paypal_payer_id text,
+  paypal_subscription_id text unique,
   status text not null default 'active' check (status in ('active', 'cancelled', 'past_due')),
   plan_name text,
   current_period_end timestamptz,
   created_at timestamptz not null default now()
 );
+
+-- Migration (run in Supabase SQL editor if table already exists):
+-- ALTER TABLE public.subscriptions RENAME COLUMN lemon_customer_id TO paypal_payer_id;
+-- ALTER TABLE public.subscriptions RENAME COLUMN lemon_subscription_id TO paypal_subscription_id;
 
 -- ── INDEXES FOR OPTIMAL PERFORMANCE ───────────────────────────
 create index idx_projects_user on public.projects(user_id);

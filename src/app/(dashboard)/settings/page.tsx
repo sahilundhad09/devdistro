@@ -1,18 +1,24 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { LogOut, User, CreditCard } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LogOut, User, CreditCard, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Button, Card, CardBody, CardHeader, Badge } from '@/components/ui';
-import { getCheckoutUrl } from '@/lib/payments/lemonsqueezy';
 
 export default function SettingsPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loggingOut, setLoggingOut] = useState(false);
   const [user, setUser] = useState<{ id: string; email: string } | null>(null);
   const [tier, setTier] = useState<string>('free');
   const [loading, setLoading] = useState(true);
+  const [upgrading, setUpgrading] = useState(false);
+
+  // Read PayPal redirect feedback from query params
+  const success = searchParams.get('success') === 'true';
+  const cancelled = searchParams.get('cancelled') === 'true';
+  const errorParam = searchParams.get('error');
 
   useEffect(() => {
     async function loadUser() {
@@ -22,7 +28,6 @@ export default function SettingsPage() {
       if (authUser && authUser.email) {
         setUser({ id: authUser.id, email: authUser.email });
 
-        // Fetch user's profile tier
         const { data: profile } = await supabase
           .from('users')
           .select('plan_tier')
@@ -47,13 +52,40 @@ export default function SettingsPage() {
     router.refresh();
   };
 
-  const [simulating, setSimulating] = useState(false);
-
-  const handleUpgrade = () => {
+  /**
+   * Initiates the PayPal subscription flow.
+   * Calls our server route which creates a PayPal subscription and
+   * returns an approval URL. We then redirect the user to PayPal.
+   */
+  const handleUpgrade = async () => {
     if (!user) return;
-    const checkoutUrl = getCheckoutUrl(user.id, user.email);
-    window.open(checkoutUrl, '_blank');
+    setUpgrading(true);
+
+    try {
+      const res = await fetch('/api/paypal/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.approvalUrl) {
+        alert(`Could not initiate PayPal checkout: ${data.error || 'Unknown error'}`);
+        setUpgrading(false);
+        return;
+      }
+
+      // Redirect user to PayPal-hosted approval page
+      window.location.href = data.approvalUrl;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      alert(`Error: ${message}`);
+      setUpgrading(false);
+    }
   };
+
+  // ── Dev-only webhook simulator ──────────────────────────────────
+  const [simulating, setSimulating] = useState(false);
 
   const handleSimulateWebhook = async (action: 'upgrade' | 'cancel') => {
     if (!user) return;
@@ -62,21 +94,21 @@ export default function SettingsPage() {
       const res = await fetch('/api/dev/simulate-upgrade', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          email: user.email,
-          action,
-        }),
+        body: JSON.stringify({ userId: user.id, email: user.email, action }),
       });
 
       const data = await res.json();
       if (data.success) {
-        alert(`Simulation successful: ${action === 'upgrade' ? 'Upgraded to Pro' : 'Cancelled subscription'}. Refreshing...`);
+        alert(
+          `Simulation successful: ${
+            action === 'upgrade' ? 'Upgraded to Pro' : 'Cancelled subscription'
+          }. Refreshing...`
+        );
         window.location.reload();
       } else {
         alert(`Simulation failed: ${data.error}`);
       }
-    } catch (err: unknown) {
+    } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       alert(`Error during simulation: ${message}`);
     } finally {
@@ -108,8 +140,64 @@ export default function SettingsPage() {
         </p>
       </div>
 
+      {/* ── PayPal Return Status Banners ── */}
+      {success && (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          padding: 'var(--space-4)',
+          background: 'var(--color-success-bg)',
+          border: '2px solid var(--color-success)',
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-5)',
+          color: 'var(--color-success)',
+          fontWeight: 600,
+        }}>
+          <CheckCircle size={18} />
+          You&apos;re now on the Pro plan! Thank you for subscribing.
+        </div>
+      )}
+
+      {cancelled && (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          padding: 'var(--space-4)',
+          background: 'var(--color-warning-bg)',
+          border: '2px solid var(--color-warning)',
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-5)',
+          color: 'var(--color-warning)',
+          fontWeight: 600,
+        }}>
+          <XCircle size={18} />
+          Payment cancelled. No charges were made.
+        </div>
+      )}
+
+      {errorParam && (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          padding: 'var(--space-4)',
+          background: 'var(--color-error-bg)',
+          border: '2px solid var(--color-error)',
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-5)',
+          color: 'var(--color-error)',
+          fontWeight: 600,
+        }}>
+          <AlertCircle size={18} />
+          Something went wrong during checkout ({errorParam}). Please try again or contact support.
+        </div>
+      )}
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', maxWidth: 600 }}>
-        {/* Account */}
+
+        {/* Account Card */}
         <Card>
           <CardHeader>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
@@ -124,7 +212,11 @@ export default function SettingsPage() {
               </p>
               <strong style={{ fontSize: 'var(--font-size-base)' }}>{user?.email}</strong>
             </div>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)', marginBottom: 'var(--space-4)' }}>
+            <p style={{
+              color: 'var(--color-text-secondary)',
+              fontSize: 'var(--font-size-sm)',
+              marginBottom: 'var(--space-4)',
+            }}>
               Your account is managed through Supabase Authentication.
             </p>
             <Button
@@ -138,7 +230,7 @@ export default function SettingsPage() {
           </CardBody>
         </Card>
 
-        {/* Billing */}
+        {/* Billing Card */}
         <Card>
           <CardHeader>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
@@ -154,10 +246,11 @@ export default function SettingsPage() {
               <p style={{
                 color: 'var(--color-text-secondary)',
                 fontSize: 'var(--font-size-sm)',
-                marginBottom: 'var(--space-4)',
                 lineHeight: 'var(--line-height-relaxed)',
               }}>
-                Thank you for supporting DevDistro! You are currently on the <strong>Pro</strong> plan with unlimited distribution plans.
+                Thank you for supporting DevDistro! You are on the <strong>Pro</strong> plan
+                with unlimited distribution plans. Your subscription is managed through PayPal —
+                you can cancel anytime from your PayPal account.
               </p>
             ) : (
               <>
@@ -167,18 +260,24 @@ export default function SettingsPage() {
                   marginBottom: 'var(--space-4)',
                   lineHeight: 'var(--line-height-relaxed)',
                 }}>
-                  You&apos;re currently on the <strong>Free</strong> plan with 3 distribution plans per month.
-                  Upgrade to <strong>Pro</strong> for unlimited plans.
+                  You&apos;re on the <strong>Free</strong> plan with 3 distribution plans per month.
+                  Upgrade to <strong>Pro</strong> for unlimited plans at <strong>$9/month</strong>.
+                  Payments are processed securely via PayPal.
                 </p>
-                <Button variant="accent" icon={<CreditCard size={16} />} onClick={handleUpgrade}>
-                  Upgrade to Pro — $9/mo
+                <Button
+                  variant="accent"
+                  icon={<CreditCard size={16} />}
+                  loading={upgrading}
+                  onClick={handleUpgrade}
+                >
+                  Upgrade to Pro — $9/mo via PayPal
                 </Button>
               </>
             )}
           </CardBody>
         </Card>
 
-        {/* Developer Webhook Simulator (only in development) */}
+        {/* Developer Webhook Simulator (development only) */}
         {process.env.NODE_ENV === 'development' && (
           <Card>
             <CardHeader>
@@ -193,7 +292,8 @@ export default function SettingsPage() {
                 marginBottom: 'var(--space-4)',
                 lineHeight: 'var(--line-height-relaxed)',
               }}>
-                Test the Lemon Squeezy integration locally without setting up tunnels. This sends a signed webhook payload to your local webhook endpoint.
+                Test the PayPal integration locally without a real PayPal account.
+                Sends a mock webhook payload to your local PayPal webhook endpoint.
               </p>
               <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
                 <Button
@@ -216,8 +316,8 @@ export default function SettingsPage() {
             </CardBody>
           </Card>
         )}
+
       </div>
     </div>
   );
 }
-

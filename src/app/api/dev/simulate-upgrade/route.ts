@@ -1,82 +1,98 @@
+// ================================================================
+// POST /api/dev/simulate-upgrade
+// ================================================================
+// Development-only endpoint. Simulates a PayPal webhook event by
+// constructing a realistic payload and posting it to the local
+// PayPal webhook handler — WITHOUT signature verification
+// (since we can't generate a real PayPal signature locally).
+//
+// The PayPal webhook handler skips verification when
+// PAYPAL_WEBHOOK_ID is not set, which is the case in development.
+// ================================================================
+
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
 import { createAdminClient } from '@/lib/supabase/admin';
 
 export async function POST(request: Request) {
-  // Only allow this endpoint in development mode
+  // Only allow in development
   if (process.env.NODE_ENV !== 'development') {
     return NextResponse.json({ error: 'Not allowed in production' }, { status: 403 });
   }
 
   try {
-    const { userId, email, action } = await request.json();
+    const { userId, action } = await request.json();
 
-    if (!userId || !email) {
-      return NextResponse.json({ error: 'userId and email are required' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
     }
 
-    const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET || 'your_webhook_secret';
-    const variantId = process.env.LEMONSQUEEZY_VARIANT_ID || '12345';
     const supabase = createAdminClient();
 
-    let eventName = 'subscription_created';
-    let status = 'active';
-    let subscriptionId = 'mock_sub_' + Math.floor(Math.random() * 1000000);
+    let eventType: string;
+    let mockSubscriptionId: string;
 
     if (action === 'cancel') {
-      eventName = 'subscription_cancelled';
-      status = 'cancelled';
+      eventType = 'BILLING.SUBSCRIPTION.CANCELLED';
 
-      // Try to find the user's existing subscription to cancel it properly
+      // Try to find existing subscription to use its real ID
       const { data: existingSub } = await supabase
         .from('subscriptions')
-        .select('lemon_subscription_id')
+        .select('paypal_subscription_id')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
 
-      if (existingSub) {
-        subscriptionId = existingSub.lemon_subscription_id;
-      }
+      mockSubscriptionId =
+        existingSub?.paypal_subscription_id ?? `I-MOCK${Math.floor(Math.random() * 1000000)}`;
+    } else {
+      eventType = 'BILLING.SUBSCRIPTION.ACTIVATED';
+      mockSubscriptionId = `I-MOCK${Math.floor(Math.random() * 1000000)}`;
     }
 
-    // Construct a realistic Lemon Squeezy subscription webhook payload
+    // Construct a realistic PayPal webhook payload
+    const nextBillingTime = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
     const mockPayload = {
-      meta: {
-        event_name: eventName,
-        custom_data: {
-          user_id: userId,
+      id: `WH-MOCK-${Date.now()}`,
+      event_version: '1.0',
+      create_time: new Date().toISOString(),
+      resource_type: 'subscription',
+      event_type: eventType,
+      summary: `Simulated ${eventType}`,
+      resource: {
+        id: mockSubscriptionId,
+        plan_id: process.env.PAYPAL_PLAN_ID ?? 'P-MOCK_PLAN_ID',
+        custom_id: userId, // This is how we map back to the user
+        status: action === 'cancel' ? 'CANCELLED' : 'ACTIVE',
+        subscriber: {
+          payer_id: 'MOCK_PAYER_ID',
+          email_address: 'mock@devdistro.dev',
+          name: { given_name: 'Mock', surname: 'User' },
         },
-      },
-      data: {
-        id: subscriptionId,
-        type: 'subscriptions',
-        attributes: {
-          store_id: 1111,
-          customer_id: 2222,
-          status: status,
-          variant_name: 'Pro Plan',
-          variant_id: parseInt(variantId) || 12345,
-          renews_at: action === 'upgrade' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : null,
-          ends_at: action === 'cancel' ? new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() : null,
+        billing_info: {
+          next_billing_time: action === 'cancel' ? undefined : nextBillingTime,
         },
+        create_time: new Date().toISOString(),
+        update_time: new Date().toISOString(),
       },
     };
 
     const rawBody = JSON.stringify(mockPayload);
-
-    // Compute signature using the local secret
-    const hmac = crypto.createHmac('sha256', secret);
-    const signature = hmac.update(rawBody).digest('hex');
-
-    // Send request locally to our actual webhook handler
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${appUrl}/api/webhooks/lemonsqueezy`, {
+
+    // Post to the local PayPal webhook handler
+    // Note: signature verification is skipped when PAYPAL_WEBHOOK_ID is unset
+    const res = await fetch(`${appUrl}/api/webhooks/paypal`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-signature': signature,
+        // PayPal webhook headers (empty in dev — verification is skipped)
+        'paypal-transmission-id': 'mock-transmission-id',
+        'paypal-transmission-time': new Date().toISOString(),
+        'paypal-cert-url': '',
+        'paypal-auth-algo': 'SHA256withRSA',
+        'paypal-transmission-sig': '',
       },
       body: rawBody,
     });
@@ -84,14 +100,20 @@ export async function POST(request: Request) {
     const responseData = await res.json();
 
     if (!res.ok) {
-      return NextResponse.json({
-        success: false,
-        error: responseData.error || 'Webhook handler returned error status',
-      }, { status: res.status });
+      return NextResponse.json(
+        { success: false, error: responseData.error || 'Webhook handler returned error' },
+        { status: res.status }
+      );
     }
 
-    return NextResponse.json({ success: true, message: `Simulation for ${action} sent successfully`, data: responseData });
-  } catch (error: unknown) {
+    return NextResponse.json({
+      success: true,
+      message: `Simulation for "${action}" sent successfully`,
+      event: eventType,
+      subscriptionId: mockSubscriptionId,
+      data: responseData,
+    });
+  } catch (error) {
     console.error('Simulation error:', error);
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json({ success: false, error: message }, { status: 500 });
