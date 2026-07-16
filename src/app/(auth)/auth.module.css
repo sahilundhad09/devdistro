@@ -1,4 +1,4 @@
-/* Auth Page Styles — Gumroad-inspired */
+/* Auth Page Styles — Dark theme */
 .authPage {
   min-height: 100vh;
   display: flex;
@@ -19,10 +19,10 @@
   z-index: 1;
   animation: fadeInUp 450ms ease-out;
   background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-glow);
 }
 
 .authCard__header {
@@ -42,26 +42,26 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-lg);
-  background: #ff90e8;
-  border: 2px solid #1a1a1a;
-  box-shadow: 3px 3px 0px #1a1a1a;
+  background: #A068FF;
+  border: 1px solid rgba(160, 104, 255, 0.3);
+  box-shadow: 0 0 20px rgba(160, 104, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 .authCard__logoText {
   font-size: var(--font-size-2xl);
   font-weight: 900;
-  color: var(--color-text-primary);
+  color: #ffffff;
   letter-spacing: -0.04em;
 }
 
 .authCard__title {
   font-size: var(--font-size-2xl);
   font-weight: 900;
-  color: var(--color-text-primary);
+  color: #ffffff;
   margin-bottom: var(--space-2);
   letter-spacing: -0.03em;
 }
@@ -90,8 +90,8 @@
 .authCard__divider::after {
   content: '';
   flex: 1;
-  height: 2px;
-  background: var(--color-border-light);
+  height: 1px;
+  background: var(--color-border);
 }
 
 .authCard__footer {
@@ -109,12 +109,12 @@
 .authCard__error {
   padding: var(--space-3) var(--space-4);
   background: var(--color-error-bg);
-  border: 2px solid var(--color-error);
+  border: 1px solid var(--color-error);
   border-radius: var(--radius-md);
   color: var(--color-error);
   font-size: var(--font-size-sm);
   font-weight: 600;
-  box-shadow: 2px 2px 0px var(--color-error);
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
 }
 
 /* OAuth button */
@@ -126,8 +126,8 @@
   width: 100%;
   padding: var(--space-3) var(--space-4);
   height: 46px;
-  background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   color: var(--color-text-primary);
   font-family: var(--font-family);
@@ -135,13 +135,13 @@
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   letter-spacing: -0.01em;
 }
 
 .oauthBtn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .oauthBtn svg {

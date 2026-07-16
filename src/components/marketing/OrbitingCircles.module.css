@@ -1,0 +1,104 @@
+/* OrbitingCircles Styles */
+.container {
+  position: relative;
+  width: 720px;
+  height: 720px;
+  flex-shrink: 0;
+  animation: circles-scale-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* ── Orbit rings ── */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Gradient border via mask */
+.orbit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 104, 255, 0) 0%,
+    rgba(160, 104, 255, 0.6) 43%,
+    rgba(160, 104, 255, 0) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Avatars / Platform Icons ── */
+.avatar {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: avatar-fly-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.avatarInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* ── Center content ── */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  text-align: center;
+}
+
+.centerNumber {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.centerLabel {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  color: #A068FF;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1280px) {
+  .container { transform: scale(0.85); transform-origin: center; }
+}
+@media (max-width: 1024px) {
+  .container { transform: scale(0.7); transform-origin: center; }
+}
+@media (max-width: 768px) {
+  .container { transform: scale(0.5); transform-origin: center; }
+}
+@media (max-width: 480px) {
+  .container { transform: scale(0.4); transform-origin: center; }
+}

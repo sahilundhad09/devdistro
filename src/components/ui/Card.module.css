@@ -1,10 +1,10 @@
 /* ================================================================
-   Card Component Styles — Gumroad-inspired
+   Card Component Styles — Dark theme
    ================================================================ */
 
 .card {
   background: var(--color-bg-card);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   transition:
     box-shadow var(--transition-fast),
@@ -17,30 +17,27 @@
 
 .card--interactive:hover {
   box-shadow: var(--shadow-md);
-  transform: translate(-2px, -2px);
 }
 
 .card--interactive:active {
-  transform: translate(0, 0);
   box-shadow: none;
 }
 
 .card--glow {
-  box-shadow: var(--shadow-pink);
+  box-shadow: var(--shadow-accent);
 }
 .card--glow:hover {
   box-shadow: var(--shadow-glow-strong);
-  transform: translate(-2px, -2px);
 }
 
 .card--bordered {
-  border-color: #ff90e8;
+  border-color: var(--color-accent-primary);
 }
 
 /* ── Card Sections ── */
 .card__header {
   padding: var(--space-5) var(--space-6);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +50,7 @@
 
 .card__footer {
   padding: var(--space-4) var(--space-6);
-  border-top: 2px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: flex-end;

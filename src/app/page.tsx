@@ -1,17 +1,23 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   Zap, Target, MessageSquare, CheckCircle2, Globe, Clock,
   Briefcase, ArrowRight, Check,
 } from 'lucide-react';
-import { Button, Card, CardBody, Badge } from '@/components/ui';
-import DemoPreview from '@/components/marketing/DemoPreview';
+import { Card, CardBody, Badge } from '@/components/ui';
+import TypewriterHeading from '@/components/marketing/TypewriterHeading';
+import OrbitingCircles from '@/components/marketing/OrbitingCircles';
+import LogoTicker from '@/components/marketing/LogoTicker';
 import styles from './(marketing)/landing.module.css';
 
-
 export default function LandingPage() {
+  const [typingDone, setTypingDone] = useState(false);
+
   return (
     <div className={styles.landing}>
-      {/* Navigation */}
+      {/* ── Navigation ── */}
       <nav className={styles.nav}>
         <div className={styles.nav__inner}>
           <Link href="/" className={styles.nav__logo}>
@@ -20,49 +26,74 @@ export default function LandingPage() {
             </div>
             <span className={styles.nav__logoText}>DevDistro</span>
           </Link>
+
+          <div className={styles.nav__center}>
+            <a href="#features" className={styles.nav__link}>Features</a>
+            <a href="#pricing" className={styles.nav__link}>Pricing</a>
+          </div>
+
           <div className={styles.nav__links}>
-            <Link href="/login">
-              <Button variant="ghost" size="sm">Sign In</Button>
+            <Link href="/login" className={styles.nav__loginLink}>
+              Sign In
             </Link>
-            <Link href="/signup">
-              <Button size="sm">Get Started Free</Button>
-            </Link>
+            <div className="btn-border-wrap">
+              <Link href="/signup" className={styles.nav__cta}>
+                Get Started Free
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* ── Hero ── */}
       <section className={styles.hero}>
-        <div className={styles.hero__glow} />
-        <div className={styles.hero__badge}>
-          <Zap size={14} /> AI-Powered Distribution Plans
-        </div>
-        <h1 className={styles.hero__title}>
-          Stop guessing where to{' '}
-          <span className="gradient-text">distribute</span> your product
-        </h1>
-        <p className={styles.hero__subtitle}>
-          Describe your app or service. Get a specific, actionable distribution plan
-          with exact subreddits, groups, directories, and ready-to-use message templates.
-        </p>
-        <div className={styles.hero__cta}>
-          <Link href="/signup">
-            <Button size="lg" icon={<ArrowRight size={18} />}>
-              Generate Your Plan — Free
-            </Button>
-          </Link>
-          <Link href="#features">
-            <Button variant="secondary" size="lg">
+        <div className={styles.hero__left}>
+          <div className={styles.hero__badge}>
+            <Zap size={14} /> AI-Powered Distribution Plans
+          </div>
+
+          <TypewriterHeading
+            text="Stop guessing where to distribute your product — Let AI do it for you"
+            splitAt={38}
+            speed={35}
+            delay={400}
+            onComplete={() => setTypingDone(true)}
+          />
+
+          <p className={styles.hero__subtitle}>
+            Describe your app or service. Get a specific, actionable distribution plan
+            with exact subreddits, groups, directories, and ready-to-use message templates.
+          </p>
+
+          <div
+            className={styles.hero__cta}
+            style={{
+              opacity: typingDone ? 1 : 0,
+              transform: typingDone ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          >
+            <div className="btn-border-wrap">
+              <Link href="/signup" className={styles.hero__ctaBtn}>
+                Generate Your Plan — Free
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+            <Link href="#features" className={styles.nav__loginLink}>
               See How It Works
-            </Button>
-          </Link>
+            </Link>
+          </div>
+        </div>
+
+        <div className={styles.hero__right}>
+          <OrbitingCircles />
         </div>
       </section>
 
-      {/* Demo Preview */}
-      <DemoPreview />
+      {/* ── Logo Ticker ── */}
+      <LogoTicker />
 
-      {/* Features */}
+      {/* ── Features ── */}
       <section id="features" className={styles.features}>
         <h2 className={styles.features__title}>Not generic advice. Specific actions.</h2>
         <p className={styles.features__subtitle}>
@@ -112,7 +143,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* ── Pricing ── */}
       <section id="pricing" className={styles.pricing}>
         <h2 className={styles.pricing__title}>Simple pricing</h2>
         <div className={styles.pricing__grid}>
@@ -135,8 +166,17 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/signup">
-                  <Button variant="secondary" fullWidth>Get Started</Button>
+                <Link href="/signup" style={{ display: 'block' }}>
+                  <button
+                    className={styles.nav__cta}
+                    style={{
+                      width: '100%',
+                      background: 'transparent',
+                      border: '1px solid rgba(160, 104, 255, 0.3)',
+                    }}
+                  >
+                    Get Started
+                  </button>
                 </Link>
               </div>
             </CardBody>
@@ -168,16 +208,23 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/signup">
-                  <Button fullWidth>Upgrade to Pro</Button>
-                </Link>
+                <div className="btn-border-wrap" style={{ width: '100%', display: 'block' }}>
+                  <Link href="/signup" style={{ display: 'block' }}>
+                    <button
+                      className={styles.hero__ctaBtn}
+                      style={{ width: '100%' }}
+                    >
+                      Upgrade to Pro
+                    </button>
+                  </Link>
+                </div>
               </div>
             </CardBody>
           </Card>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── CTA ── */}
       <section className={styles.cta}>
         <h2 className={styles.cta__title}>
           Ready to stop guessing?
@@ -185,14 +232,15 @@ export default function LandingPage() {
         <p className={styles.cta__subtitle}>
           Generate your first distribution plan in under 2 minutes. No credit card required.
         </p>
-        <Link href="/signup">
-          <Button size="lg" icon={<Zap size={18} />}>
+        <div className="btn-border-wrap">
+          <Link href="/signup" className={styles.hero__ctaBtn}>
+            <Zap size={18} />
             Generate Your Plan — Free
-          </Button>
-        </Link>
+          </Link>
+        </div>
       </section>
 
-      {/* Footer */}
+      {/* ── Footer ── */}
       <footer className={styles.footer}>
         <p>© {new Date().getFullYear()} DevDistro. Built for indie developers and freelancers.</p>
       </footer>

@@ -1,0 +1,45 @@
+/* LogoTicker Styles */
+.ticker {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-8) 0;
+  animation: hero-entrance-up 1s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+  /* Fade masks on edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: max-content;
+  animation: ticker-scroll 20s linear infinite;
+}
+
+.logo {
+  width: 137px;
+  height: 40px;
+  object-fit: contain;
+  opacity: 0.5;
+  filter: brightness(0) invert(1);
+  transition: opacity var(--transition-base);
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}

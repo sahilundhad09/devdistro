@@ -1,9 +1,9 @@
-/* Modal Component Styles — Gumroad-inspired */
+/* Modal Component Styles — Dark theme */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(6, 2, 24, 0.7);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,9 +13,9 @@
 }
 .modal {
   background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-glow);
   width: 100%;
   max-width: 500px;
   max-height: 85vh;
@@ -27,7 +27,7 @@
 .modal--lg { max-width: 700px; }
 .modal__header {
   padding: var(--space-5) var(--space-6);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,8 +36,8 @@
 .modal__close {
   width: 34px; height: 34px;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
-  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
   color: var(--color-text-primary);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -45,13 +45,13 @@
   font-weight: 700;
 }
 .modal__close:hover {
-  background: var(--color-bg-tertiary);
+  background: var(--color-bg-card-hover);
   box-shadow: var(--shadow-sm);
-  transform: translate(-1px, -1px);
+  border-color: var(--color-border-hover);
 }
 .modal__body { padding: var(--space-6); overflow-y: auto; flex: 1; }
 .modal__footer {
   padding: var(--space-4) var(--space-6);
-  border-top: 2px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
   display: flex; justify-content: flex-end; gap: var(--space-3);
 }
