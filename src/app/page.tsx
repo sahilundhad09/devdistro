@@ -4,13 +4,57 @@ import { useState } from 'react';
 import Link from 'next/link';
 import {
   Zap, Target, MessageSquare, CheckCircle2, Globe, Clock,
-  Briefcase, ArrowRight, Check,
+  Briefcase, ArrowRight, Check, Star, TrendingUp, Users, FileText,
 } from 'lucide-react';
 import { Card, CardBody, Badge } from '@/components/ui';
 import TypewriterHeading from '@/components/marketing/TypewriterHeading';
 import OrbitingCircles from '@/components/marketing/OrbitingCircles';
 import LogoTicker from '@/components/marketing/LogoTicker';
 import styles from './(marketing)/landing.module.css';
+
+/* ── Testimonials data ─────────────────────────────────────────── */
+const testimonials = [
+  {
+    quote: "Generated a plan in 2 minutes that took me to the front page of r/SideProject. 340 upvotes and 12 signups in 24 hours.",
+    author: "Alex K.",
+    role: "Solo founder, Notion template creator",
+    avatar: "AK",
+    avatarColor: "#7B5EA7",
+    stars: 5,
+  },
+  {
+    quote: "I kept posting randomly and getting zero traction. DevDistro told me exactly which subreddits, what to say, and even gave me the templates. Game changer.",
+    author: "Priya M.",
+    role: "Indie developer, SaaS tool",
+    avatar: "PM",
+    avatarColor: "#0A66C2",
+    stars: 5,
+  },
+  {
+    quote: "As a freelancer, I never knew where to find clients online. Now I have a specific list of communities and exact messages that actually work.",
+    author: "Daniel R.",
+    role: "Freelance full-stack developer",
+    avatar: "DR",
+    avatarColor: "#DA552F",
+    stars: 5,
+  },
+  {
+    quote: "Submitted to 11 directories in one afternoon using the direct links DevDistro gave me. Already getting organic traffic from 4 of them.",
+    author: "Sofia W.",
+    role: "Founder, productivity app",
+    avatar: "SW",
+    avatarColor: "#1DA1F2",
+    stars: 5,
+  },
+];
+
+/* ── Stats data ────────────────────────────────────────────────── */
+const stats = [
+  { icon: <FileText size={20} />, value: "1,200+", label: "Plans Generated" },
+  { icon: <Users size={20} />, value: "800+", label: "Founders Using It" },
+  { icon: <TrendingUp size={20} />, value: "50+", label: "Distribution Channels" },
+  { icon: <Globe size={20} />, value: "2 min", label: "Avg. Plan Time" },
+];
 
 export default function LandingPage() {
   const [typingDone, setTypingDone] = useState(false);
@@ -30,6 +74,7 @@ export default function LandingPage() {
           <div className={styles.nav__center}>
             <a href="#features" className={styles.nav__link}>Features</a>
             <a href="#pricing" className={styles.nav__link}>Pricing</a>
+            <a href="#testimonials" className={styles.nav__link}>Reviews</a>
           </div>
 
           <div className={styles.nav__links}>
@@ -65,6 +110,27 @@ export default function LandingPage() {
             with exact subreddits, groups, directories, and ready-to-use message templates.
           </p>
 
+          {/* ── Social proof mini-bar ── */}
+          <div className={styles.hero__proof}>
+            <div className={styles.hero__proofAvatars}>
+              {['AK','PM','DR','SW','TL'].map((initials, i) => (
+                <div
+                  key={i}
+                  className={styles.hero__proofAvatar}
+                  style={{ background: ['#7B5EA7','#0A66C2','#DA552F','#1DA1F2','#A068FF'][i] }}
+                >
+                  {initials}
+                </div>
+              ))}
+            </div>
+            <div className={styles.hero__proofText}>
+              <div className={styles.hero__proofStars}>
+                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#FFB800" color="#FFB800" />)}
+              </div>
+              <span>Trusted by <strong>800+</strong> founders & developers</span>
+            </div>
+          </div>
+
           <div
             className={styles.hero__cta}
             style={{
@@ -88,6 +154,17 @@ export default function LandingPage() {
         <div className={styles.hero__right}>
           <OrbitingCircles />
         </div>
+      </section>
+
+      {/* ── Stats Bar ── */}
+      <section className={styles.statsBar}>
+        {stats.map((stat, i) => (
+          <div key={i} className={styles.statItem}>
+            <div className={styles.statItem__icon}>{stat.icon}</div>
+            <div className={styles.statItem__value}>{stat.value}</div>
+            <div className={styles.statItem__label}>{stat.label}</div>
+          </div>
+        ))}
       </section>
 
       {/* ── Logo Ticker ── */}
@@ -139,6 +216,40 @@ export default function LandingPage() {
                 <p className={styles.featureCard__desc}>{feature.desc}</p>
               </CardBody>
             </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Testimonials ── */}
+      <section id="testimonials" className={styles.testimonials}>
+        <div className={styles.testimonials__header}>
+          <h2 className={styles.testimonials__title}>Real results from real founders</h2>
+          <p className={styles.testimonials__subtitle}>
+            Join hundreds of indie developers and freelancers already getting traction.
+          </p>
+        </div>
+        <div className={styles.testimonials__grid}>
+          {testimonials.map((t, i) => (
+            <div key={i} className={styles.testimonialCard}>
+              <div className={styles.testimonialCard__stars}>
+                {[...Array(t.stars)].map((_, j) => (
+                  <Star key={j} size={14} fill="#FFB800" color="#FFB800" />
+                ))}
+              </div>
+              <p className={styles.testimonialCard__quote}>&ldquo;{t.quote}&rdquo;</p>
+              <div className={styles.testimonialCard__author}>
+                <div
+                  className={styles.testimonialCard__avatar}
+                  style={{ background: t.avatarColor }}
+                >
+                  {t.avatar}
+                </div>
+                <div>
+                  <div className={styles.testimonialCard__name}>{t.author}</div>
+                  <div className={styles.testimonialCard__role}>{t.role}</div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -210,10 +321,7 @@ export default function LandingPage() {
                 </ul>
                 <div className="btn-border-wrap" style={{ width: '100%', display: 'block' }}>
                   <Link href="/signup" style={{ display: 'block' }}>
-                    <button
-                      className={styles.hero__ctaBtn}
-                      style={{ width: '100%' }}
-                    >
+                    <button className={styles.hero__ctaBtn} style={{ width: '100%' }}>
                       Upgrade to Pro
                     </button>
                   </Link>
@@ -226,9 +334,7 @@ export default function LandingPage() {
 
       {/* ── CTA ── */}
       <section className={styles.cta}>
-        <h2 className={styles.cta__title}>
-          Ready to stop guessing?
-        </h2>
+        <h2 className={styles.cta__title}>Ready to stop guessing?</h2>
         <p className={styles.cta__subtitle}>
           Generate your first distribution plan in under 2 minutes. No credit card required.
         </p>

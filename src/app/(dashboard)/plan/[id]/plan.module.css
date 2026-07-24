@@ -1,4 +1,4 @@
-/* Plan View Page Styles — Gumroad-inspired */
+/* Plan View Page Styles — Dark Theme */
 .planPage {
   animation: fadeIn 280ms ease-out;
 }
@@ -19,7 +19,7 @@
   font-weight: 900;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-2);
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .planPage__meta {
@@ -40,7 +40,7 @@
 .tabs {
   display: flex;
   gap: var(--space-1);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-6);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -61,9 +61,9 @@
   background: none;
   cursor: pointer;
   white-space: nowrap;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2px solid transparent;
   transition: all var(--transition-fast);
-  margin-bottom: -2px;
+  margin-bottom: -1px;
   letter-spacing: -0.01em;
 }
 
@@ -72,18 +72,18 @@
 }
 
 .tab--active {
-  color: #1a1a1a;
-  font-weight: 800;
-  border-bottom-color: #ff90e8;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  border-bottom-color: #A068FF;
 }
 
 .tab__count {
   font-size: var(--font-size-xs);
   padding: 2px 7px;
   border-radius: var(--radius-sm);
-  background: #ff90e8;
-  border: 1.5px solid #1a1a1a;
-  color: #1a1a1a;
+  background: rgba(160, 104, 255, 0.2);
+  border: 1px solid rgba(160, 104, 255, 0.3);
+  color: #A068FF;
   font-weight: 700;
 }
 
@@ -119,16 +119,16 @@
   font-weight: 800;
 }
 .itemCard__titleLink:hover {
-  color: var(--color-text-accent);
+  color: #A068FF;
   text-decoration: underline;
 }
 
 .itemCard__audience {
   font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   flex-shrink: 0;
   background: var(--color-bg-tertiary);
-  border: 1.5px solid var(--color-border-medium);
+  border: 1px solid var(--color-border-medium);
   padding: 2px var(--space-2);
   border-radius: var(--radius-sm);
   font-weight: 600;
@@ -143,11 +143,11 @@
 
 .itemCard__angle {
   font-size: var(--font-size-sm);
-  color: var(--color-text-accent);
+  color: #A068FF;
   padding: var(--space-2) var(--space-3);
-  background: rgba(232, 0, 125, 0.05);
+  background: rgba(160, 104, 255, 0.08);
   border-radius: var(--radius-sm);
-  border-left: 3px solid #ff90e8;
+  border-left: 3px solid #A068FF;
   margin-bottom: var(--space-3);
   font-weight: 500;
 }
@@ -156,7 +156,7 @@
 .template {
   background: var(--color-bg-secondary);
   border-radius: var(--radius-md);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
@@ -166,7 +166,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   background: var(--color-bg-tertiary);
 }
 
@@ -184,19 +184,18 @@
   gap: var(--space-1);
   font-size: var(--font-size-xs);
   font-weight: 700;
-  color: var(--color-text-accent);
-  border: 1.5px solid var(--color-text-accent);
-  background: var(--color-bg-primary);
+  color: #A068FF;
+  border: 1px solid rgba(160, 104, 255, 0.4);
+  background: rgba(160, 104, 255, 0.08);
   cursor: pointer;
   padding: 2px var(--space-2);
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
   font-family: var(--font-family);
-  box-shadow: 1px 1px 0px var(--color-text-accent);
 }
 .template__copy:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px var(--color-text-accent);
+  background: rgba(160, 104, 255, 0.18);
+  box-shadow: 0 0 12px rgba(160, 104, 255, 0.25);
 }
 
 .template__body {
@@ -217,7 +216,7 @@
   white-space: pre-wrap;
 }
 
-/* Quick Wins / PH Checklist */
+/* Quick Wins */
 .quickWins {
   margin-top: var(--space-8);
 }
@@ -230,7 +229,7 @@
   align-items: center;
   gap: var(--space-2);
   letter-spacing: -0.02em;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .quickWins__list {
@@ -248,27 +247,28 @@
   color: var(--color-text-secondary);
   line-height: var(--line-height-relaxed);
   padding: var(--space-3) var(--space-4);
-  background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
 }
 
 .quickWins__item:hover {
   box-shadow: var(--shadow-sm);
-  transform: translate(-1px, -1px);
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-card-hover);
 }
 
 .quickWins__bullet {
   width: 22px;
   height: 22px;
   border-radius: var(--radius-sm);
-  background: #ff90e8;
-  border: 2px solid #1a1a1a;
+  background: rgba(160, 104, 255, 0.2);
+  border: 1px solid rgba(160, 104, 255, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a1a1a;
+  color: #A068FF;
   font-size: 11px;
   font-weight: 800;
   flex-shrink: 0;
@@ -284,7 +284,7 @@
   }
 }
 
-/* Export Dropdown styles */
+/* Export Dropdown */
 .exportDropdown {
   position: relative;
   display: inline-block;
@@ -296,8 +296,8 @@
   right: 0;
   margin-top: var(--space-2);
   min-width: 160px;
-  background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   overflow: hidden;

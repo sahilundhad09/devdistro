@@ -1,4 +1,4 @@
-/* Action Tracker Page Styles — Gumroad-inspired */
+/* Action Tracker Page Styles — Dark Theme */
 .tracker {}
 
 .tracker__header {
@@ -15,7 +15,7 @@
   font-weight: 900;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-2);
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .tracker__subtitle {
@@ -40,7 +40,7 @@
 .tracker__progressLabel {
   font-size: var(--font-size-sm);
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   letter-spacing: -0.01em;
 }
 
@@ -52,17 +52,17 @@
 
 .tracker__progressBar {
   width: 100%;
-  height: 10px;
-  border-radius: var(--radius-sm);
+  height: 8px;
+  border-radius: var(--radius-full);
   background: var(--color-bg-tertiary);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   overflow: hidden;
 }
 
 .tracker__progressFill {
   height: 100%;
-  border-radius: 0;
-  background: #ff90e8;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #A068FF, #c49aff);
   transition: width var(--transition-slow);
 }
 
@@ -77,41 +77,39 @@
 .filterBtn {
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
-  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
   color: var(--color-text-secondary);
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
 }
 
 .filterBtn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-hover);
   color: var(--color-text-primary);
 }
 
 .filterBtn--active {
-  background: #ff90e8;
-  border-color: #1a1a1a;
-  color: #1a1a1a;
-  box-shadow: 3px 3px 0px #1a1a1a;
+  background: rgba(160, 104, 255, 0.15);
+  border-color: rgba(160, 104, 255, 0.4);
+  color: #A068FF;
+  box-shadow: 0 0 12px rgba(160, 104, 255, 0.15);
 }
 
 .filterBtn--active:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px #1a1a1a;
+  background: rgba(160, 104, 255, 0.22);
+  box-shadow: 0 0 18px rgba(160, 104, 255, 0.22);
 }
 
 .addChannelBtn {
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
-  border: 2px dashed var(--color-border-medium);
+  border: 1px dashed rgba(160, 104, 255, 0.3);
   background: transparent;
-  color: var(--color-text-accent);
+  color: #A068FF;
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   font-weight: 700;
@@ -123,9 +121,9 @@
 }
 
 .addChannelBtn:hover {
-  border-color: #ff90e8;
+  border-color: #A068FF;
   border-style: solid;
-  background: rgba(255, 144, 232, 0.06);
+  background: rgba(160, 104, 255, 0.08);
 }
 
 /* Checklist items */
@@ -158,8 +156,8 @@
 
 .checklistGroup__addBtn,
 .checklistGroup__deleteBtn {
-  background: var(--color-bg-primary);
-  border: 2px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
   font-family: var(--font-family);
   font-size: var(--font-size-xs);
   font-weight: 700;
@@ -171,23 +169,18 @@
   align-items: center;
   gap: 4px;
   transition: all var(--transition-fast);
-  box-shadow: 1px 1px 0px var(--color-border);
 }
 
 .checklistGroup__addBtn:hover {
-  color: var(--color-text-accent);
-  border-color: #ff90e8;
-  background: rgba(255, 144, 232, 0.06);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px #ff90e8;
+  color: #A068FF;
+  border-color: rgba(160, 104, 255, 0.4);
+  background: rgba(160, 104, 255, 0.08);
 }
 
 .checklistGroup__deleteBtn:hover {
   color: var(--color-error);
   border-color: var(--color-error);
   background: var(--color-error-bg);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px var(--color-error);
 }
 
 .checkItem {
@@ -196,19 +189,20 @@
   gap: var(--space-3);
   padding: var(--space-4);
   border-radius: var(--radius-md);
-  border: 2px solid var(--color-border);
-  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
   margin-bottom: var(--space-2);
   transition: all var(--transition-fast);
 }
 
 .checkItem:hover {
+  border-color: var(--color-border-hover);
   box-shadow: var(--shadow-sm);
-  transform: translate(-1px, -1px);
+  background: var(--color-bg-card-hover);
 }
 
 .checkItem--done {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .checkItem--done .checkItem__title {
@@ -220,7 +214,7 @@
   width: 22px;
   height: 22px;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border-medium);
   background: transparent;
   cursor: pointer;
   display: flex;
@@ -233,15 +227,15 @@
 }
 
 .checkItem__checkbox:hover {
-  border-color: #ff90e8;
-  background: rgba(255, 144, 232, 0.1);
+  border-color: rgba(160, 104, 255, 0.5);
+  background: rgba(160, 104, 255, 0.08);
 }
 
 .checkItem__checkbox--checked {
-  background: #ff90e8;
-  border-color: #1a1a1a;
-  color: #1a1a1a;
-  box-shadow: 1px 1px 0px #1a1a1a;
+  background: #A068FF;
+  border-color: rgba(160, 104, 255, 0.6);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(160, 104, 255, 0.35);
 }
 
 .checkItem__content {
@@ -272,7 +266,7 @@
 .checkItem__actionBtn {
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--color-text-muted);
   font-family: var(--font-family);

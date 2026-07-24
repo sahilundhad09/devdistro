@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Zap, Globe, Briefcase, Rocket, Loader2, Link2, Eye, EyeOff, Edit3 } from 'lucide-react';
@@ -18,6 +18,7 @@ export default function NewPlanPage() {
   const [urlData, setUrlData] = useState<{ title: string; description: string; content: string } | null>(null);
   const [urlLoading, setUrlLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [generatingStep, setGeneratingStep] = useState(0);
   const [error, setError] = useState('');
   const [isPaymentRequired, setIsPaymentRequired] = useState(false);
   const [scrapedContent, setScrapedContent] = useState('');
@@ -93,15 +94,66 @@ export default function NewPlanPage() {
     }
   };
 
+  // Advance step indicators while generating
+  useEffect(() => {
+    if (!generating) { setGeneratingStep(0); return; }
+    const timings = [2000, 5000, 9000]; // ms after start to advance each step
+    const timers = timings.map((delay, i) =>
+      setTimeout(() => setGeneratingStep(i + 1), delay)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [generating]);
+
   if (generating) {
+    const steps = [
+      { emoji: '⚡', label: 'Analyzing your project...' },
+      { emoji: '🔍', label: 'Scanning 50+ distribution channels...' },
+      { emoji: '✍️', label: 'Writing custom templates...' },
+      { emoji: '🎯', label: 'Finalizing your strategy...' },
+    ];
     return (
-      <div className={styles.generating}>
-        <div className={styles.generating__spinner} />
-        <h2 className={styles.generating__title}>Generating your plan...</h2>
-        <p className={styles.generating__desc}>
-          Analyzing your project and finding the best distribution channels.
-          <br />This usually takes 10–20 seconds.
-        </p>
+      <div className={styles.genScreen}>
+        <div className={styles.genScreen__ambient} />
+        {/* Pulsing orb */}
+        <div className={styles.genOrb}>
+          <div className={styles.genOrb__ring1} />
+          <div className={styles.genOrb__ring2} />
+          <div className={styles.genOrb__ring3} />
+          <div className={styles.genOrb__core} />
+        </div>
+        {/* Steps */}
+        <div className={styles.genSteps}>
+          {steps.map((step, i) => {
+            const done = i < generatingStep;
+            const active = i === generatingStep;
+            const pending = i > generatingStep;
+            return (
+              <div
+                key={i}
+                className={[
+                  styles.genStep,
+                  done ? styles['genStep--done'] : '',
+                  active ? styles['genStep--active'] : '',
+                  pending ? styles['genStep--pending'] : '',
+                ].join(' ')}
+                style={{ animationDelay: `${i * 80}ms` }}
+              >
+                <div className={styles.genStep__icon}>
+                  {done && <span className={styles.genStep__check}>✓</span>}
+                  {active && <span className={styles.genStep__spinner} />}
+                  {pending && <span className={styles.genStep__dot} />}
+                </div>
+                <span className={styles.genStep__emoji}>{step.emoji}</span>
+                <span className={styles.genStep__label}>{step.label}</span>
+              </div>
+            );
+          })}
+        </div>
+        {/* Progress bar */}
+        <div className={styles.genProgress}>
+          <div className={styles.genProgress__bar} />
+        </div>
+        <span className={styles.genScreen__hint}>Usually takes 10–20 seconds</span>
       </div>
     );
   }
