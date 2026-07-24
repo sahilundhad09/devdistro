@@ -5,35 +5,46 @@
 import type { ProjectMode } from '@/types';
 import { SEED_DATA } from './seed-data';
 
-const SYSTEM_PROMPT = `You are an elite distribution strategist for indie developers and solopreneurs. Generate hyper-specific, actionable distribution plans — not generic advice.
+const SYSTEM_PROMPT = `You are an elite distribution strategist for indie developers and solopreneurs. Generate hyper-specific, actionable distribution plans.
 
-TEMPLATE LENGTH RULES (strictly enforced):
-- template_body for reddit/facebook/linkedin: 150-300 words minimum. Write as the actual founder. No short replies.
-- template_body for newsletter: full pitch email 120-180 words (greeting + hook + why their readers + CTA).
-- template_body for twitter: hook tweet PLUS 3-4 numbered follow-up tweets (1/ 2/ 3/).
-- angle: 2 sentences minimum — specific story angle + why it fits this community.
-- Short templates are REJECTED.
+═══ CRITICAL REDDIT RULES (most important) ═══
+Every subreddit has a postingRules field — you MUST follow it exactly for that community.
+GENERAL Reddit rules that apply everywhere:
+- NEVER write "check out my app", "link in bio", "DM me" or any call to action that feels promotional
+- NEVER include your product URL in the post body (it gets auto-removed by Reddit spam filters)
+- Write as a genuine human sharing a story or asking for help, not as a marketer
+- The product name can be mentioned naturally 1-2 times — no more
+- End with a genuine question to invite discussion, never with "try it free" or similar
+- Safe formats: "I built X because I had problem Y, here's what I learned", milestone posts ("launched 3 months ago, here's what happened"), lesson-learned posts
+- Unsafe formats: "I made X, give it a try!", product feature lists, anything resembling a landing page
 
-OTHER RULES:
-- All subreddits/groups/newsletters must be real and active.
-- Reddit posts: value-first, never promotional, end with question or invite.
-- Directories: use direct submission URLs, not homepages.
-- LinkedIn: include 5-8 hashtags at the end of every post.
-- For freelance mode: target where CLIENTS hang out, not other freelancers.
+═══ FACEBOOK GROUP RULES ═══
+- ONLY use Facebook groups from the SEED DATA — do NOT invent groups
+- Use the exact group URL from seed data
+- Friendly, helpful tone — Facebook groups allow more direct mentions than Reddit
+- Always lead with a question or insight before mentioning your product
+
+═══ TEMPLATE LENGTH (strictly enforced) ═══
+- Reddit template_body: 150-250 words. Story format. First-person. No links.
+- Facebook template_body: 100-180 words. Conversational. Can include product name + one link at end.
+- Twitter template_body: hook tweet + 3-4 numbered follow-up tweets (1/ 2/ 3/)
+- Newsletter template_body: 100-150 word pitch email. Personalized, professional.
+- LinkedIn template_body: 150-250 words + 5 relevant hashtags at end.
+- angle: 2 specific sentences — exact story angle + why it fits this community's culture.
 
 Return ONLY valid JSON. No markdown fences, no explanations.`;
 
 const RESPONSE_SCHEMA = `{
   "channels": {
-    "reddit": [{"title":"r/Name","description":"Why relevant","url":"https://reddit.com/r/...","audience_size":"Xk members","angle":"2-sentence specific angle","template_title":"Post title","template_body":"150-300 word post body as the founder, value-first, no promotion, ends with question"}],
-    "facebook": [{"title":"Group Name","description":"Why relevant","url":"https://facebook.com/groups/...","audience_size":"Xk members","angle":"2-sentence angle","template_title":"Post hook","template_body":"120-200 word friendly post, value-first, ends with engagement question"}],
-    "twitter": [{"title":"Strategy name","description":"Why this works","url":"optional","audience_size":"reach","angle":"content angle + best timing","template_title":"Hook tweet","template_body":"Hook tweet text\\n\\n1/ First tweet (under 280 chars)\\n\\n2/ Second tweet\\n\\n3/ Third tweet\\n\\n4/ Final tweet with CTA"}],
-    "newsletter": [{"title":"Newsletter name","description":"Coverage + audience","url":"submission/contact URL","audience_size":"Xk subscribers","angle":"Why their readers care","template_title":"Email subject line","template_body":"120-180 word pitch: greeting + personal hook about their newsletter + value for readers + what you offer + CTA"}],
-    "directory": [{"title":"Directory name","description":"Audience + monthly traffic","url":"direct-submission-url.com/submit","audience_size":"monthly visitors","angle":"How to optimize: best category, keywords, description tips"}],
-    "linkedin": [{"title":"Content strategy","description":"Why this works","angle":"target job titles + pain points","template_title":"Scroll-stopping first line","template_body":"150-250 word post: punchy hook, 3-4 short paragraphs, personal insight, CTA, then hashtags: #tag1 #tag2 #tag3 #tag4 #tag5"}]
+    "reddit": [{"title":"r/Name","description":"Community culture and why relevant","url":"https://reddit.com/r/...","audience_size":"Xk members","angle":"2 sentences: exact story angle that fits this community's rules and culture","template_title":"Post title — curiosity-first, not promotional","template_body":"150-250 words. First-person story as founder. Describe the problem, the journey, what you learned. Mention product name once naturally. End with a genuine question. ZERO promotional language. No URLs in body."}],
+    "facebook": [{"title":"Group Name","description":"Why this group fits","url":"exact URL from seed data","audience_size":"Xk members","angle":"2 sentences: tone and approach for this group","template_title":"Post hook","template_body":"100-180 words. Friendly and conversational. Lead with a question or insight. Product name mention is fine. One URL at the very end only."}],
+    "twitter": [{"title":"Strategy name","description":"Why this works","url":"optional","audience_size":"reach","angle":"content angle + best posting time","template_title":"Hook tweet (first line, stops scroll)","template_body":"Hook tweet\\n\\n1/ First tweet (under 280 chars)\\n\\n2/ Second tweet\\n\\n3/ Third tweet\\n\\n4/ CTA tweet"}],
+    "newsletter": [{"title":"Newsletter name","description":"Coverage and audience","url":"contact/submission URL","audience_size":"Xk subscribers","angle":"Why their readers specifically will care","template_title":"Email subject line","template_body":"100-150 word pitch: Hi [Name], opening hook about their newsletter, why this fits their readers, what you offer, simple CTA. Human and concise."}],
+    "directory": [{"title":"Directory name","description":"Audience and traffic","url":"direct-submission-url","audience_size":"monthly visitors or listings","angle":"Best category + 3 keywords to use in listing description"}],
+    "linkedin": [{"title":"Content strategy","description":"Why this LinkedIn strategy works","angle":"Target job titles and pain points to address","template_title":"First line — pattern interrupt to stop scroll","template_body":"150-250 words: punchy hook, 3-4 short paragraphs, personal insight or data point, CTA. End with: #hashtag1 #hashtag2 #hashtag3 #hashtag4 #hashtag5"}]
   },
-  "quickWins": ["Specific step-by-step action doable in 30 min with exact platform/community named"],
-  "producthuntChecklist": ["Specific PH launch step with details"]
+  "quickWins": ["Name the exact platform + specific action + why it works — doable in 30 min"],
+  "producthuntChecklist": ["Specific step with detail — not generic advice"]
 }`;
 
 export function buildPrompt(
@@ -46,36 +57,46 @@ export function buildPrompt(
   const keywords = targetAudience.toLowerCase().split(/[\s,]+/);
   const relevantSeed = filterSeedData(keywords, mode);
 
-  // Compact seed representation to save tokens
-  const compactSeed = {
-    subreddits: (relevantSeed.subreddits as Array<{name:string;members:string;url:string}>)
-      .map(s => `${s.name} (${s.members}) — ${s.url}`),
-    directories: (relevantSeed.directories as Array<{name:string;url:string}>)
-      .map(d => `${d.name} — ${d.url}`),
-    newsletters: (relevantSeed.newsletters as Array<{name:string;url:string;description:string}>)
-      .map(n => `${n.name} — ${n.url} — ${n.description}`),
-  };
+  // Compact seed serialization to save input tokens
+  const compactSubreddits = (relevantSeed.subreddits as Array<{name:string;members:string;url:string;postingRules:string}>)
+    .map(s => `${s.name} (${s.members}) ${s.url} | Rules: ${s.postingRules}`);
+
+  const compactFbGroups = (relevantSeed.facebookGroups as Array<{name:string;members:string;url:string}>)
+    .map(g => `${g.name} (${g.members}) ${g.url}`);
+
+  const compactDirectories = (relevantSeed.directories as Array<{name:string;url:string}>)
+    .map(d => `${d.name}: ${d.url}`);
+
+  const compactNewsletters = (relevantSeed.newsletters as Array<{name:string;subscribers:string;url:string;description:string}>)
+    .map(n => `${n.name} (${n.subscribers}): ${n.url} — ${n.description}`);
 
   const userPrompt = `PROJECT:
 Name: ${title}
 Mode: ${mode === 'freelance' ? 'Freelance Service (target CLIENTS, not freelancers)' : 'App/Product'}
 Description: ${description}
 Target Audience: ${targetAudience}
-${scrapedContent ? `\nLANDING PAGE:\n${scrapedContent.slice(0, 1500)}\n` : ''}
-SEED CHANNELS (use as primary sources, add more you know exist):
-Subreddits: ${compactSeed.subreddits.join(' | ')}
-Directories: ${compactSeed.directories.join(' | ')}
-Newsletters: ${compactSeed.newsletters.join(' | ')}
+${scrapedContent ? `\nLANDING PAGE:\n${scrapedContent.slice(0, 1200)}\n` : ''}
+SUBREDDITS (with their moderation rules — follow rules exactly):
+${compactSubreddits.join('\n')}
+
+FACEBOOK GROUPS (only use these — do not invent groups):
+${compactFbGroups.join('\n')}
+
+DIRECTORIES (direct submission links):
+${compactDirectories.join('\n')}
+
+NEWSLETTERS:
+${compactNewsletters.join('\n')}
 
 GENERATE:
-- 8-10 Reddit subreddits (each with 150-300 word template_body)
-- 5-7 Facebook groups (each with 120-200 word template_body)
-- 4-5 Twitter/X strategies (each a 5-tweet thread)
-- 3-5 newsletter pitches (each a full 120-180 word email)
-- 10+ directories (direct submission URLs only)
-- 3-5 LinkedIn posts (each 150-250 words + hashtags)
-- 5 quick wins (specific, named platforms, doable in 30 min)
-${mode === 'app' ? '- 6-8 Product Hunt launch steps (specific)' : '- 5 client acquisition quick wins'}
+- 8-10 Reddit subreddits (follow each subreddit's rules exactly, no promotional language)
+- 5-7 Facebook groups from seed data only (conversational, helpful tone)
+- 4-5 Twitter/X strategies (full thread per strategy)
+- 3-4 newsletter pitches (full 100-150 word pitch email each)
+- 10+ directories (use direct submission URLs from seed data)
+- 3-5 LinkedIn strategies (full post + hashtags each)
+- 5 quick wins (specific platform + action + why)
+${mode === 'app' ? '- 6 Product Hunt launch steps (specific)' : '- 5 client acquisition quick wins'}
 
 SCHEMA:
 ${RESPONSE_SCHEMA}
@@ -88,6 +109,7 @@ Return ONLY the JSON.`;
 function filterSeedData(keywords: string[], mode: ProjectMode) {
   const result: Record<string, unknown[]> = {
     subreddits: [],
+    facebookGroups: [],
     directories: [],
     newsletters: [],
   };
@@ -99,6 +121,13 @@ function filterSeedData(keywords: string[], mode: ProjectMode) {
     const tags = sub.tags.map((t: string) => t.toLowerCase());
     if (allKeywords.some(k => tags.some(t => t.includes(k) || k.includes(t)))) {
       result.subreddits.push(sub);
+    }
+  }
+
+  for (const grp of (SEED_DATA.facebookGroups || [])) {
+    const tags = grp.tags.map((t: string) => t.toLowerCase());
+    if (allKeywords.some(k => tags.some(t => t.includes(k) || k.includes(t)))) {
+      result.facebookGroups.push(grp);
     }
   }
 
@@ -115,9 +144,12 @@ function filterSeedData(keywords: string[], mode: ProjectMode) {
     }
   }
 
-  // Enforce minimums but cap to avoid 413
+  // Enforce minimums + cap
   if (result.subreddits.length < 5) result.subreddits = SEED_DATA.subreddits.slice(0, 12);
-  else result.subreddits = result.subreddits.slice(0, 15);
+  else result.subreddits = result.subreddits.slice(0, 14);
+
+  if (result.facebookGroups.length < 5) result.facebookGroups = (SEED_DATA.facebookGroups || []).slice(0, 10);
+  else result.facebookGroups = result.facebookGroups.slice(0, 12);
 
   if (result.directories.length < 5) result.directories = SEED_DATA.directories.slice(0, 15);
   else result.directories = result.directories.slice(0, 18);
