@@ -20,8 +20,8 @@ export const RATE_LIMIT_PRO = 20;      // requests per window
 
 // ── AI ──
 export const AI_MODEL = 'llama-3.3-70b-versatile';
-export const AI_MAX_TOKENS = 4096;
-export const AI_TEMPERATURE = 0.7;
+export const AI_MAX_TOKENS = 8000;   // Increased for rich, detailed templates
+export const AI_TEMPERATURE = 0.75;
 export const AI_MAX_RETRIES = 2;
 
 // ── URL Scraper ──

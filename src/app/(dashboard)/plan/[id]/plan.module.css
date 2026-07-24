@@ -3,6 +3,134 @@
   animation: fadeIn 280ms ease-out;
 }
 
+/* ── Overview Tab ── */
+.overview {}
+
+.overview__statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.overviewCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-family);
+  width: 100%;
+}
+
+.overviewCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border-color: rgba(160, 104, 255, 0.2);
+  background: var(--color-bg-card-hover);
+}
+
+.overviewCard__icon {
+  margin-bottom: var(--space-2);
+}
+
+.overviewCard__count {
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  color: var(--color-text-primary);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.overviewCard__label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.overviewCard__sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin-top: var(--space-1);
+}
+
+/* ── Total opportunities badge in meta ── */
+.planPage__total {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #A068FF;
+  font-weight: 600;
+}
+
+/* ── Item card actions row ── */
+.itemCard__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* ── Deep link button ── */
+.itemCard__deepLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: #A068FF;
+  border: 1px solid rgba(160, 104, 255, 0.3);
+  background: rgba(160, 104, 255, 0.08);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.itemCard__deepLink:hover {
+  background: rgba(160, 104, 255, 0.18);
+  border-color: rgba(160, 104, 255, 0.5);
+  box-shadow: 0 0 10px rgba(160, 104, 255, 0.2);
+}
+
+/* ── Template header actions ── */
+.template__headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.template__openBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  font-family: var(--font-family);
+}
+
+.template__openBtn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
 .planPage__header {
   margin-bottom: var(--space-8);
   display: flex;
